@@ -22,3 +22,24 @@ Then you can run the script and pipe the output to a ConvertTo-Csv, and you shou
 
 - [ ] Move the cmdlets to a GraphOneDriveSuite Module
 
+## Remove-oneDriveFiles
+
+Here is a simple tool that reads a csv files that contains `userId` and `fileId` and removes them.
+
+you will need write permissions to use this
+
+[Permissions](./service-principle-read-write.md)
+
+### How to Run
+
+Go through the rapport generate by the previous script and remove any files that should not be deleted. 
+Then you can export the remaining files to a csv, and target them.  
+
+```powershell
+.\files\remove-oneDriveFiles.ps1 -CsvPath .\onedrv-files-test-one.csv
+```
+There is a confirmations step, so you wont be deleting you files by mistake.
+
+Note that this is a soft delete so you files will be in the Recycling bin to recover them.
+
+
