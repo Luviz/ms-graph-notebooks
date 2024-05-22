@@ -12,7 +12,7 @@ $scope = "https://graph.microsoft.com/.default"
 $tokenUrl = "https://login.microsoftonline.com/$tenantId/oauth2/v2.0/token"
 $msGraph = "https://graph.microsoft.com/v1.0"
 
-function get-accessToken {
+function Get-AccessToken {
     $body = @{
         grant_type    = "client_credentials"
         client_id     = $clientId
@@ -25,12 +25,12 @@ function get-accessToken {
     return $responseData.access_token
 } 
 
-$token = get-accessToken 
+$token = Get-AccessToken 
 $headers = @{
     Authorization = "Bearer $token"
 }
 
-function get-folderItems {
+function Get-FolderItems {
     [CmdletBinding()]
     param (
         # User id
@@ -52,7 +52,7 @@ function get-folderItems {
     Exit-PSSession
 }
 
-function get-userFiles {
+function Get-UserFiles {
     param (
         # User id
         [Parameter(Mandatory)]
@@ -65,7 +65,7 @@ function get-userFiles {
         $folder = $folders[0]
         $folders.RemoveAt(0)
         if ($null -eq $folder ) { continue }
-        $objects = get-folderItems -UserId $userId -FolderId $folder
+        $objects = Get-FolderItems -UserId $userId -FolderId $folder
         $files += $objects | Where-Object { $null -eq $_.PSObject.Properties["folder"] }
         $newFolders = $objects | Where-Object { $null -ne $_.PSObject.Properties["folder"] -and $_.folder.childCount -gt 0 }
         # Write-Output "$newFolders.name, " # todo add progress bar
@@ -74,4 +74,4 @@ function get-userFiles {
     return $files
 }
 
-get-userFiles -UserId $userId | Select-Object -Property "id", "name", "size", "webUrl"
+Get-UserFiles -UserId $userId | Select-Object -Property "id", "name", "size", "webUrl"
