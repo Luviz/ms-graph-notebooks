@@ -71,7 +71,7 @@ function Get-UserFiles {
         # Write-Output "$newFolders.name, " # todo add progress bar
         $folders += $newFolders.id
     }
-    return $files
+    return $files | ForEach-Object { $_ | Add-Member -MemberType NoteProperty -Name userId -Value $userId -PassThru }
 }
 
-Get-UserFiles -UserId $userId | Select-Object -Property "id", "name", "size", "webUrl"
+Get-UserFiles -UserId $userId | Select-Object -Property "id", "name", "size", "webUrl", "userId"
