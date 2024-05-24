@@ -7,9 +7,9 @@ param (
 )
 
 ## Configuration 
-## APP infomation
+## APP information
 $tenantId = "8f4baa8a-c188-4891-8a8c-0b7d53418c93"
-$clientId = "1c0887a1-2b6c-4a95-9dfb-53901c3049a5"
+$clientId = "69be8a05-bd02-42b1-8435-235bc1fd56ba"
 $clientSecret = "<secret>"
 
 # login with id secret
@@ -51,8 +51,8 @@ function Remove-DriveItem {
         $FileId
     )
 
-    $url = "$msGraph/users/$UserId/drive/items/$FileId/"
-    Invoke-WebRequest -Uri $url -Method Delete -Headers $headers
+    $url = "$msGraph/users/$UserId/drive/items/$FileId/permanentDelete"
+    Invoke-WebRequest -Uri $url -Method Post -Headers $headers
 }
 
 function Read-DriveItemsFromCSV {
