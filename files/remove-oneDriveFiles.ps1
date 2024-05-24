@@ -1,7 +1,9 @@
 param (
     [Parameter(Mandatory)]
     [string]
-    $CsvPath
+    $CsvPath,
+    [char]
+    $CsvDelimiter = ','
 )
 
 ## Configuration 
@@ -62,7 +64,7 @@ function Read-DriveItemsFromCSV {
         $path
     )
 
-    return Get-Content $path | ConvertFrom-Csv | Select-Object id, userId, name
+    return Get-Content $path | ConvertFrom-Csv -Delimiter $CsvDelimiter | Select-Object id, userId, name
 }
 
 $filesToBeRemove = Read-DriveItemsFromCSV -path $CsvPath
